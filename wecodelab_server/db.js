@@ -63,8 +63,7 @@ exports.add = function (
 ) {
     connect();
     connection.query(
-        `INSERT INTO logic(a, BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory, Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer, per, updateon) 
-        VALUES (${a},${BMI},${Smoking},${AlcoholDrinking},${Stroke} ,${PhysicalHealth} ,${MentalHealth} ,${DiffWalking} ,${Sex} ,${AgeCategory} ,${Race} ,${Diabetic} ,${PhysicalActivity} ,${GenHealth} ,${SleepTime} ,${Asthma} ,${KidneyDisease} ,${SkinCancer} ,${per} ,${date})`,
+        `INSERT INTO logic(a, BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory, Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer, per, updateon) VALUES (${a},${BMI},${Smoking},${AlcoholDrinking},${Stroke} ,${PhysicalHealth} ,${MentalHealth} ,${DiffWalking} ,${Sex} ,${AgeCategory} ,${Race} ,${Diabetic} ,${PhysicalActivity} ,${GenHealth} ,${SleepTime} ,${Asthma} ,${KidneyDisease} ,${SkinCancer} ,${per} ,${date})`,
         function (err, res, fields) {
             if (!err) {
                 callback(res);
