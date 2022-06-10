@@ -1,5 +1,5 @@
 var express = require("express");
-var database = require(".db");
+var database = require("db.js");
 var app = express();
 
 app.get("/api/get", function (req, res) {
