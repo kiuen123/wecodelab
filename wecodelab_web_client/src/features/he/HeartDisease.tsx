@@ -1,5 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import styled from "styled-components";
+import axios from "axios";
+import { useEffect } from "react";
 
 const ALL = styled.div`
     display: flex;
@@ -48,7 +50,22 @@ const ALL = styled.div`
     }
 `;
 
+const get = function (callback: any) {
+    axios({
+        url: `http://118.71.64.144:3001/api/get`,
+        method: "get",
+    }).then((result) => {
+        callback(result.data);
+    });
+};
+
 function HeartDisease() {
+    useEffect(() => {
+        get((data: any) => {
+            console.log(data);
+        });
+    }, []);
+
     return (
         <ALL>
             <h1>Heart Disease prediction</h1>

@@ -27,7 +27,7 @@ var close = function () {
     });
 };
 
-exports.get = function (data, callback) {
+exports.get = function (callback) {
     connect();
     connection.query("SELECT * FROM logic ORDER BY per DESC LIMIT 1", function (err, res, fields) {
         if (!err) {
