@@ -16,13 +16,13 @@ var datetime =
     ":" +
     currentdate.getHours();
 
-app.get("/api/get", function (req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
-    database.get(function (data) {
-        console.log(data);
-        res.send(data);
-    });
-});
+// app.get("/api/get", function (req, res) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     database.get(function (data) {
+//         console.log(data);
+//         res.send(data);
+//     });
+// });
 
 app.get("/api/add", function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");

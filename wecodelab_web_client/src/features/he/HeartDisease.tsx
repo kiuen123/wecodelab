@@ -1,7 +1,8 @@
 import { Field, Form, Formik } from "formik";
 import styled from "styled-components";
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
+var mysql = require("mysql");
 
 const ALL = styled.div`
     display: flex;
@@ -50,12 +51,40 @@ const ALL = styled.div`
     }
 `;
 
-const get = function (callback: any) {
-    axios({
-        url: `http://118.71.64.144:3001/api/get`,
-        method: "get",
-    }).then((result) => {
-        callback(result.data);
+// const get = function (callback: any) {
+//     axios({
+//         url: `http://118.71.64.144:3001/api/get`,
+//         method: "get",
+//     }).then((result) => {
+//         callback(result.data);
+//     });
+// };
+
+var connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "heartdisease",
+});
+
+const connect = function () {
+    connection.connect(function (err:any) {
+        if (!err) {
+            console.log("db connect ok");
+        } else {
+            console.log("db connect fail");
+        }
+    });
+};
+
+const get = function (callback:any) {
+    connect();
+    connection.query("SELECT * FROM logic ORDER BY per DESC LIMIT 1", function (err:any, res:any, fields:any) {
+        if (!err) {
+            callback(res);
+        } else {
+            console.log(err);
+        }
     });
 };
 
