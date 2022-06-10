@@ -24,9 +24,9 @@ app.get("/api/get", function (req, res) {
     });
 });
 
-app.post("/api/add", function (req, res) {
+app.get("/api/add", function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
-    database.add(req.body.w, req.body.per, datetime, function (data) {
+    database.add(req.query.w, req.query.per, datetime, function (data) {
         console.log(data);
         res.send(data);
     });
