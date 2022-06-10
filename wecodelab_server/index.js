@@ -5,16 +5,16 @@ var app = express();
 var currentdate = new Date();
 var datetime =
     currentdate.getDate() +
-    "-" +
+    "/" +
     (currentdate.getMonth() + 1) +
-    "-" +
+    "/" +
     currentdate.getFullYear() +
-    "_" +
-    currentdate.getHours() +
     "-" +
+    currentdate.getSeconds() +
+    ":" +
     currentdate.getMinutes() +
-    "-" +
-    currentdate.getSeconds();
+    ":" +
+    currentdate.getHours();
 
 app.get("/api/get", function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
