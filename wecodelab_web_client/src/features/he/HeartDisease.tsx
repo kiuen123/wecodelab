@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import styled from "styled-components";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const ALL = styled.div`
     display: flex;
@@ -60,11 +60,14 @@ const get = function (callback: any) {
 };
 
 function HeartDisease() {
+    const [logicdata, setLogicdata] = useState<any>([]);
     useEffect(() => {
         get((data: any) => {
-            console.log(data);
+            setLogicdata(data[0]);
         });
     }, []);
+
+    useEffect(() => {}, [logicdata]);
 
     return (
         <ALL>
@@ -84,11 +87,59 @@ function HeartDisease() {
                     tieuduong: 0,
                     PhysicalActivity: 0,
                     GenHealth: 0,
+                    thoigianngu: 0,
                     hen: 0,
                     than: 0,
                     SkinCancer: 0,
                 }}
-                onSubmit={(values) => {}}
+                onSubmit={(values) => {
+                    let BMI_convert;
+                    if (values.BMI > 40) BMI_convert = 8 / 8;
+                    else if (values.BMI >= 35 && values.BMI < 40) BMI_convert = 7 / 8;
+                    else if (values.BMI >= 30 && values.BMI < 35) BMI_convert = 6 / 8;
+                    else if (values.BMI >= 25 && values.BMI < 30) BMI_convert = 5 / 8;
+                    else if (values.BMI >= 18.5 && values.BMI < 25) BMI_convert = 4 / 8;
+                    else if (values.BMI >= 17 && values.BMI < 18.5) BMI_convert = 3 / 8;
+                    else if (values.BMI >= 16 && values.BMI < 17) BMI_convert = 2 / 8;
+                    else BMI_convert = 1 / 8;
+                    console.log(BMI_convert);
+
+                    let tuoi_convert;
+                    if (values.tuoi > 60) tuoi_convert = 3 / 3;
+                    else if (values.tuoi >= 40 && values.tuoi < 60) tuoi_convert = 2 / 3;
+                    else tuoi_convert = 1 / 3;
+                    console.log(tuoi_convert);
+
+                    let thoigianngu_convert = 0;
+                    if (values.tuoi < 65) {
+                        if (values.thoigianngu >= 7 && values.thoigianngu <= 9) thoigianngu_convert = 0.5;
+                        else if (values.thoigianngu > 9) thoigianngu_convert = 1;
+                    } else if (values.tuoi >= 65) {
+                        if (values.thoigianngu >= 7 && values.thoigianngu <= 8) thoigianngu_convert = 0.5;
+                        else if (values.thoigianngu > 8) thoigianngu_convert = 1;
+                    } else thoigianngu_convert = 0;
+                    console.log(thoigianngu_convert);
+
+                    let res =
+                        BMI_convert * parseFloat(logicdata.BMI) +
+                        values.hutthuoc * parseFloat(logicdata.Smoking) +
+                        values.uongruou * parseFloat(logicdata.AlcoholDrinking) +
+                        values.dotquy * parseFloat(logicdata.Stroke) +
+                        (values.PhysicalHealth / 100) * parseFloat(logicdata.PhysicalHealth) +
+                        (values.MentalHealth / 100) * parseFloat(logicdata.MentalHealth) +
+                        values.DiffWalking * parseFloat(logicdata.DiffWalking) +
+                        values.gioitinh * parseFloat(logicdata.Sex) +
+                        tuoi_convert * parseFloat(logicdata.AgeCategory) +
+                        (values.sactoc / 5) * parseFloat(logicdata.Race) +
+                        (values.tieuduong / 3) * parseFloat(logicdata.Diabetic) +
+                        values.PhysicalActivity * parseFloat(logicdata.PhysicalActivity) +
+                        (values.GenHealth / 4) * parseFloat(logicdata.GenHealth) +
+                        thoigianngu_convert * parseFloat(logicdata.SleepTime) +
+                        values.hen * parseFloat(logicdata.Asthma) +
+                        values.than * parseFloat(logicdata.KidneyDisease) +
+                        values.SkinCancer * parseFloat(logicdata.SkinCancer);
+                    alert(res);
+                }}
             >
                 {() => (
                     <Form>
@@ -239,7 +290,7 @@ function HeartDisease() {
                         </div>
                         <p>Bạn có thường xuyên vận động không ?</p>
 
-                        <label htmlFor="GenHealth">Tiểu đường</label>
+                        <label htmlFor="GenHealth">Sức khỏe hiện tại</label>
                         <div role="group" aria-labelledby="my-radio-group" id="GenHealth">
                             <label>
                                 <Field type="radio" name="GenHealth" value="4" />
@@ -263,6 +314,9 @@ function HeartDisease() {
                             </label>
                         </div>
                         <p>Bạn có thể nói rằng nhìn chung sức khỏe của bạn là ...</p>
+
+                        <label htmlFor="thoigianngu">Thời gian ngủ</label>
+                        <Field name="thoigianngu" type="number" id="thoigianngu" />
 
                         <label htmlFor="hen">Hen suyễn</label>
                         <div role="group" aria-labelledby="my-radio-group" id="hen">

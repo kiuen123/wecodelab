@@ -5,6 +5,9 @@ import HeartDisease from "./features/he/HeartDisease";
 import Home from "./features/homepage/Home";
 
 const APP = styled.div`
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
     font-size: 16px;
     width: 100%;
     max-width: 1600px;
