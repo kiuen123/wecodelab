@@ -29,7 +29,7 @@ var close = function () {
 
 exports.get = function (data, callback) {
     connect();
-    connection.query("SELECT * FROM `logic` ORDER BY `%` DESC LIMIT 1", function (err, res, fields) {
+    connection.query("SELECT * FROM logic ORDER BY per DESC LIMIT 1", function (err, res, fields) {
         if (!err) {
             callback(res);
         } else {
@@ -38,10 +38,33 @@ exports.get = function (data, callback) {
     });
 };
 
-exports.add = function (w, per, date, callback) {
+exports.add = function (
+    a,
+    BMI,
+    Smoking,
+    AlcoholDrinking,
+    Stroke,
+    PhysicalHealth,
+    MentalHealth,
+    DiffWalking,
+    Sex,
+    AgeCategory,
+    Race,
+    Diabetic,
+    PhysicalActivity,
+    GenHealth,
+    SleepTime,
+    Asthma,
+    KidneyDisease,
+    SkinCancer,
+    per,
+    date,
+    callback
+) {
     connect();
     connection.query(
-        `INSERT INTO logic('w', '%', 'updateon') VALUES (${w},${per},${date})`,
+        `INSERT INTO logic(a, BMI, Smoking, AlcoholDrinking, Stroke, PhysicalHealth, MentalHealth, DiffWalking, Sex, AgeCategory, Race, Diabetic, PhysicalActivity, GenHealth, SleepTime, Asthma, KidneyDisease, SkinCancer, per, updateon) 
+        VALUES (${a},${BMI},${Smoking},${AlcoholDrinking},${Stroke} ,${PhysicalHealth} ,${MentalHealth} ,${DiffWalking} ,${Sex} ,${AgeCategory} ,${Race} ,${Diabetic} ,${PhysicalActivity} ,${GenHealth} ,${SleepTime} ,${Asthma} ,${KidneyDisease} ,${SkinCancer} ,${per} ,${date})`,
         function (err, res, fields) {
             if (!err) {
                 callback(res);
