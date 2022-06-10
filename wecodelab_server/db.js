@@ -29,21 +29,19 @@ var close = function () {
 
 exports.get = function (data, callback) {
     connect();
-    connection.query(
-        "SELECT * FROM `logic` ORDER BY `%` DESC LIMIT 1",function (err, res, fields) {
-            if (!err) {
-                callback(res);
-            } else {
-                console.log(err);
-            }
+    connection.query("SELECT * FROM `logic` ORDER BY `%` DESC LIMIT 1", function (err, res, fields) {
+        if (!err) {
+            callback(res);
+        } else {
+            console.log(err);
         }
-    );
-}
+    });
+};
 
-exports.add = function (w,per,date, callback) {
+exports.add = function (w, per, date, callback) {
     connect();
     connection.query(
-        `INSERT INTO logic(w, %, updateon) VALUES (${w},${per},${date})`,
+        `INSERT INTO logic('w', '%', 'updateon') VALUES (${w},${per},${date})`,
         function (err, res, fields) {
             if (!err) {
                 callback(res);
@@ -52,4 +50,4 @@ exports.add = function (w,per,date, callback) {
             }
         }
     );
-}
+};
