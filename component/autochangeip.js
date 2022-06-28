@@ -106,6 +106,4 @@ const autochangeip = async () => {
     }
 };
 
-autochangeip();
-
 export default autochangeip;

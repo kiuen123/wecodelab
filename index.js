@@ -3,6 +3,7 @@ import autochangeip from "./component/autochangeip.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
+console.clear(); // xóa console
 // khai báo
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,12 +24,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(
-    80,
-    function () {
-        console.log("Example app listening on port 80!");
-    },
-    function (err) {
-        console.log(err);
-    }
-);
+// start app
+app.listen(80, () => {
+    console.log("working on port 80!");
+});
