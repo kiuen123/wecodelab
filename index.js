@@ -13,9 +13,9 @@ var app = express();
 let sec = 1000;
 let secofmin = 60;
 let timetoUpdate = 1; //time to update IP (min)
-// setInterval(async () => {
-//     autochangeip();
-// }, timetoUpdate * secofmin * sec);
+setInterval(async () => {
+    autochangeip();
+}, timetoUpdate * secofmin * sec);
 
 // static file
 app.use(express.static(path.join(__dirname, "public")));
