@@ -19,11 +19,11 @@ setInterval(async () => {
 
 // static file
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "frontend")));
+app.use(express.static(path.join(__dirname, "frontend/home")));
 
 // home page
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "./home/home.html"));
+    res.sendFile(path.join(__dirname, "frontend/home", "./home.html"));
 });
 
 // start app
