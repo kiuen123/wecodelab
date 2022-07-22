@@ -49,7 +49,7 @@ setInterval(() => {
     });
 }, timetoUpdate * secofmin * sec);
 // listen port
-app.get("/musicrun/:musicname", (req, res) => {
+app.get("/music/musicrun/:musicname", (req, res) => {
     let musicname = req.params.musicname;
     res.sendFile(path.join(__dirname, `public/music/${musicname}`));
 });
