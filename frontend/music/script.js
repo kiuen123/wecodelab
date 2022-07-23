@@ -20,7 +20,7 @@ const a = (ds) => {
         <div class="music">
             <div class="music-name">${ds[i]}</div>
                 <audio controls>
-                    <source src="./musicrun/${ds[i]}" type="audio/mpeg">
+                    <source src="./run/${ds[i]}" type="audio/mpeg">
                 </audio>
         </div>
                 `;

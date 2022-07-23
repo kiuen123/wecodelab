@@ -1,8 +1,8 @@
 import express from "express";
 import autochangeip from "./backend/autochangeip.js";
+import { musiclistfile } from "./backend/listfile.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import fs from "fs";
 
 console.clear(); // xóa console
 // khai báo biến toàn cục
@@ -10,10 +10,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 var app = express();
 
-// // change ip
+// set time to update
 let sec = 1000;
 let secofmin = 60;
-let timetoUpdate = 1; //time to update IP (min)
+let timetoUpdate = 1; //time to update (min)
+
+// // change ip
 setInterval(async () => {
     autochangeip();
 }, timetoUpdate * secofmin * sec);
@@ -32,32 +34,37 @@ app.get("/", (req, res) => {
 app.get("/music", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend/music", "./music.html"));
 });
-
 // tạo danh sách bài hát trong public/music
-setInterval(() => {
-    let musiclist = fs.readdirSync("./public/music/");
-    let musicjson = {
-        list: musiclist,
-    };
-    let data = JSON.stringify(musicjson);
-    fs.writeFile("./frontend/music/list.json", data, "utf8", (err) => {
-        if (err) {
-            console.log(`Error writing file: ${err}`);
-        } else {
-            console.log(`File is written successfully!`);
-        }
-    });
-}, timetoUpdate * secofmin * sec);
+clearTimeout(() => {
+    musiclistfile();
+}, timetoUpdate * sec);
 // listen port
-app.get("/music/musicrun/:musicname", (req, res) => {
+app.get("/music/run/:musicname", (req, res) => {
     let musicname = req.params.musicname;
     res.sendFile(path.join(__dirname, `public/music/${musicname}`));
 });
 
-app.get("/videorun/:videoname", (req, res) => {
+app.get("/video/run/:videoname", (req, res) => {
     let videoname = req.params.videoname;
     res.sendFile(path.join(__dirname, `public/music/${videoname}`));
 });
+
+const mimeType = {
+    ".ico": "image/x-icon",
+    ".html": "text/html",
+    ".js": "text/javascript",
+    ".json": "application/json",
+    ".css": "text/css",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".wav": "audio/wav",
+    ".mp3": "audio/mpeg",
+    ".svg": "image/svg+xml",
+    ".pdf": "application/pdf",
+    ".doc": "application/msword",
+    ".eot": "application/vnd.ms-fontobject",
+    ".ttf": "application/font-sfnt",
+};
 
 // start app
 app.listen(80, () => {

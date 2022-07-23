@@ -107,5 +107,3 @@ const autochangeip = async () => {
 };
 
 export default autochangeip;
-
-export const getIP = NewIP;
