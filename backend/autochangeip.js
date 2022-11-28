@@ -4,7 +4,7 @@ import axios from "axios";
 
 let IP = null;
 let NewIP = null;
-
+let messages = "";
 //get date-time
 const getDateTime = () => {
     let today = new Date();

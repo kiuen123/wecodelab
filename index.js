@@ -1,5 +1,5 @@
 import express from "express";
-import autochangeip from "./backend/autochangeip.js";
+// import autochangeip from "./backend/autochangeip.js";
 import { musiclistfile } from "./backend/listfile.js";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -16,9 +16,9 @@ let secofmin = 60;
 let timetoUpdate = 1; //time to update (min)
 
 // // change ip
-setInterval(async () => {
-    autochangeip();
-}, timetoUpdate * secofmin * sec);
+// setInterval(async () => {
+//     autochangeip();
+// }, timetoUpdate * secofmin * sec);
 
 // static file
 app.use(express.static(path.join(__dirname, "public")));
@@ -48,23 +48,6 @@ app.get("/video/run/:videoname", (req, res) => {
     let videoname = req.params.videoname;
     res.sendFile(path.join(__dirname, `public/music/${videoname}`));
 });
-
-const mimeType = {
-    ".ico": "image/x-icon",
-    ".html": "text/html",
-    ".js": "text/javascript",
-    ".json": "application/json",
-    ".css": "text/css",
-    ".png": "image/png",
-    ".jpg": "image/jpeg",
-    ".wav": "audio/wav",
-    ".mp3": "audio/mpeg",
-    ".svg": "image/svg+xml",
-    ".pdf": "application/pdf",
-    ".doc": "application/msword",
-    ".eot": "application/vnd.ms-fontobject",
-    ".ttf": "application/font-sfnt",
-};
 
 // start app
 app.listen(80, () => {

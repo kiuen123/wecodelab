@@ -1,22 +1,83 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="./style.css" type="text/css" />
-        <style></style>
-        <title>Wecodelab music</title>
-    </head>
-    <body>
-        <header>
-            <div id="logo"><img src="./resource/logo.png" alt="" /></div>
-            <div id="menu"></div>
-        </header>
-        <main>
-            <h1>danh sách bài hát</h1>
-            <div id="musiclist"></div>
-        </main>
-        <script src="./script.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+            font-size: 16px;
+            background: #f5f5f5;
+        }
+
+        header {
+            max-width: 1600px;
+            margin: 0 auto;
+            background-color: #fff;
+        }
+
+        main {
+            max-width: 1600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+        }
+    </style>
+    <title>Wecodelab music</title>
+</head>
+
+<body>
+    <header>
+        <div id="logo"><img src="./resource/logo.png" alt="" /></div>
+        <div id="menu"></div>
+    </header>
+    <main>
+        <h1>danh sách bài hát</h1>
+        <div id="musiclist"></div>
+    </main>
+    <script>
+        function readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
+            };
+            rawFile.send(null);
+        }
+
+        let musiclist = document.getElementById("musiclist");
+        const a = (ds) => {
+            // list music
+            let musiclist = document.getElementById("musiclist");
+            for (let i = 0; i < ds.length; i++) {
+                let music = document.createElement("div");
+                music.innerHTML = `
+                <div class="music">
+                    <div class="music-name">${ds[i]}</div>
+                        <audio controls>
+                            <source src="./run/${ds[i]}" type="audio/mpeg">
+                        </audio>
+                </div>`;
+                musiclist.appendChild(music);
+            }
+        };
+
+        readTextFile("./list.json", (text) => {
+            let ds = Object.values(JSON.parse(text).list);
+            a(ds);
+        });
+    </script>
+</body>
+
 </html>
